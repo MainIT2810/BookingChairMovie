@@ -1,5 +1,5 @@
 const stateDefault = {
-
+    danhSachGheDangDat: [],
 };
 
 const BookingChairMovieReducer = (state = stateDefault, action) => {

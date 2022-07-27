@@ -3,8 +3,25 @@
   src: url(../fonts/Pony.ttf);
 }
 
-.bookingMovie {
+.app {
+  position: relative;
   font-family: "fontGame";
+  background-image: url(../image/bgmovie.jpg);
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bookingMovie {
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .ghe {
@@ -38,7 +55,7 @@
   border-bottom: 50px solid rgb(255, 159, 95);
   border-left: 50px solid transparent;
   border-right: 50px solid transparent;
-  height: 100;
+  height: 100%;
   width: 80%;
   filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
   font-size: 25px;
