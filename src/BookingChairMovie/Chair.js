@@ -1,22 +1,31 @@
 import React, { Component } from "react";
-
-export default class Chair extends Component {
+import { connect } from "react-redux";
+import BookingChairAction from "../redux/actions/BookingChairAction";
+class Chair extends Component {
   renderChair = () => {
     return this.props.rowChair.danhSachGhe.map((chair, index) => {
       let cssGheDaDat = "";
       let disabled = false;
 
-      // Trạng thái ghế đã bị người khác đặt
+      // Trạng thái ghế đã bị người khác đặt 
       if (chair.daDat) {
         cssGheDaDat = "gheDuocChon";
         disabled = true;
       }
 
+      // Xét trạng thái ghế đang đặt
+      let cssGheDangDat = "";
+      let indexGheDangDat = this.props.danhSachGheDangDat.findIndex(gheDangDat => gheDangDat.soGhe === chair.soGhe);
+
+      if(indexGheDangDat !== -1) {
+        cssGheDangDat = "gheDangChon";
+      }
       return (
         <button
-        key={index}
-        className={`ghe ${cssGheDaDat}`}
-        disabled={disabled}
+          key={index}
+          className={`ghe ${cssGheDaDat} ${cssGheDangDat}`}
+          disabled={disabled}
+          onClick={()=>{this.props.bookingChair(chair)}}
         >
           {chair.soGhe}
         </button>
@@ -25,21 +34,20 @@ export default class Chair extends Component {
   };
 
   renderNumberRow = () => {
-    return this.props.rowChair.danhSachGhe.map((row, index) => {
+    return this.props.rowChair.danhSachGhe.map((chair, index) => {
       return (
-        <button className="rowNumber" key={index}>
-          {row.soghe}
-        </button>
+        <div key={index} className="rowNumber ps-4">
+          {chair.soGhe}
+        </div>
       );
     });
   };
 
   renderRowChair = () => {
-    if (this.props.listRowChair.soHangGhe === 0) {
+    if (this.props.listRowChair === 0) {
       return (
-        <div className="ms-5">
+        <div>
           {this.props.rowChair.hang}
-
           {this.renderNumberRow()}
         </div>
       );
@@ -52,6 +60,7 @@ export default class Chair extends Component {
       );
     }
   };
+
   render() {
     return (
       <div className="text-light text-start ms-3 mt-1 fs-2">
@@ -60,5 +69,17 @@ export default class Chair extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    danhSachGheDangDat: state.BookingChairMovieReducer.danhSachGheDangDat,
+  };
+};
 
-
+const mapDispatchToProps = dispatch => {
+  return({
+    bookingChair: (chair)=> {
+      dispatch(BookingChairAction(chair));
+    }
+  });
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Chair);

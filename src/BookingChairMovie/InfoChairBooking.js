@@ -1,6 +1,22 @@
 import React, { Component } from "react";
-
-export default class InfoChairBooking extends Component {
+import { connect } from "react-redux";
+import CancelBookingChairAction from "../redux/actions/CancelBookingChairAction";
+class InfoChairBooking extends Component {
+  renderInfoChair = () => {
+    return this.props.danhSachGheDangDat.map((gheDangDat, index) => {
+      return (
+        <tr key={index}>
+          <td>{gheDangDat.soGhe}</td>
+          <td>{gheDangDat.gia}</td>
+          <td>
+            <button className="btn btn-danger" onClick={() => {this.props.cancelChair(gheDangDat)}}>
+              Cancel
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  };
   render() {
     return (
       <div>
@@ -31,7 +47,7 @@ export default class InfoChairBooking extends Component {
               </tr>
             </thead>
 
-            <tbody className="text-warning"></tbody>
+            <tbody className="text-warning">{this.renderInfoChair()}</tbody>
 
             <tfoot>
               <tr className="text-warning">
@@ -46,3 +62,18 @@ export default class InfoChairBooking extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    danhSachGheDangDat: state.BookingChairMovieReducer.danhSachGheDangDat,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    cancelChair: (soGhe) => {
+      dispatch(CancelBookingChairAction(soGhe));
+    },
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(InfoChairBooking);

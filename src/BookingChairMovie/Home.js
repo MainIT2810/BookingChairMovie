@@ -4,15 +4,17 @@ import InfoChairBooking from "./InfoChairBooking";
 import ChairList from "../data/ChairList.json";
 import Chair from "./Chair";
 export default class Home extends Component {
+  
   renderRowChair = () => {
     return ChairList.map((chair, index) => {
       return (
-        <div>
+        <div key={index}>
           <Chair rowChair={chair} listRowChair={index} />
         </div>
       );
     });
   };
+  
   render() {
     return (
       <div className="app">
@@ -27,6 +29,7 @@ export default class Home extends Component {
                   <div className="screen"></div>
                   {this.renderRowChair()}
                 </div>
+              
               </div>
 
               <div className="col-4">
