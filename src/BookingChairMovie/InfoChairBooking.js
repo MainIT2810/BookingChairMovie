@@ -9,7 +9,12 @@ class InfoChairBooking extends Component {
           <td>{gheDangDat.soGhe}</td>
           <td>{gheDangDat.gia}</td>
           <td>
-            <button className="btn btn-danger" onClick={() => {this.props.cancelChair(gheDangDat)}}>
+            <button
+              className="btn btn-danger"
+              onClick={() => {
+                this.props.cancelChair(gheDangDat.soGhe);
+              }}
+            >
               Cancel
             </button>
           </td>
@@ -53,7 +58,14 @@ class InfoChairBooking extends Component {
               <tr className="text-warning">
                 <td></td>
                 <td>Tổng tiền</td>
-                <td></td>
+                <td>
+                  {this.props.danhSachGheDangDat.reduce(
+                    (tongTien, chair, index) => {
+                      return (tongTien += chair.gia);
+                    },
+                    0
+                  ).toLocaleString()}
+                </td>
               </tr>
             </tfoot>
           </table>
