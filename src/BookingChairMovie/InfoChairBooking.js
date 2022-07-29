@@ -7,7 +7,7 @@ class InfoChairBooking extends Component {
       return (
         <tr key={index}>
           <td>{gheDangDat.soGhe}</td>
-          <td>{gheDangDat.gia}</td>
+          <td>{gheDangDat.gia.toLocaleString()}</td>
           <td>
             <button
               className="btn btn-danger"
